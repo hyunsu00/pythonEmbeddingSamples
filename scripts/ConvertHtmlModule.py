@@ -26,8 +26,8 @@ def HtmlToPdf(htmlURL, resultFilePath):
         except Exception as e:
             print('htmlToPdfFail : %s' % (e))
     
-# 1. HtmlToImage 테스트
-# HtmlToImage("https://www.naver.com/", "naver.png", "png");
-
-# 2. HtmlToPdf 테스트
-# HtmlToPdf("https://www.naver.com/", "naver.pdf");
+if __name__ == "__main__":
+    # 1. HtmlToImage 테스트
+    HtmlToImage("https://www.naver.com/", "naver.png", "png");
+    # 2. HtmlToPdf 테스트
+    HtmlToPdf("https://www.naver.com/", "naver.pdf");
