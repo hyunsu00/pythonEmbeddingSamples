@@ -2,36 +2,54 @@
 //
 #include <iostream>
 #include <string>
+#include <vector>
 
+// Python
 #ifdef _DEBUG
 #   undef _DEBUG
-#   include <python.h>
+#   include <Python.h>
 #   define _DEBUG
 #else
-#   include <python.h>
+#   include <Python.h>
 #endif
 
 #ifdef _WIN32
-#include <atlconv.h>
+#	include <crtdbg.h> // _ASSERTE
 #else
+#	include <assert.h> // assert
+#	define _ASSERTE assert
 #	include <string.h>	// strdup
 #	include <libgen.h>	// dirname
 #endif
 
 void _PrintPyInfo()
 {
-    USES_CONVERSION;
+    auto _U2A = [](const std::wstring& wstr) -> std::string {
+        std::vector<char> strVector(wstr.length() + 1, 0);
+        wcstombs(&strVector[0], wstr.c_str(), strVector.size());
+        return &strVector[0];
+    };
 
-    std::cout << "Py_GetPath() = " << W2A(Py_GetPath()) << std::endl << std::endl;
+    auto _A2U = [](const std::string& str) -> std::wstring {
+        std::vector<wchar_t> wstrVector(str.length() + 1, 0);
+        mbstowcs(&wstrVector[0], str.c_str(), wstrVector.size());
+        return &wstrVector[0];
+    };
+
+    std::cout << "Py_GetPath() = " << _U2A(Py_GetPath()) << std::endl << std::endl;
     // std::cout << "Py_GetPythonHome() = " << W2A(Py_GetPythonHome()) << std::endl;
     std::cout << "Py_GetVersion() = " << Py_GetVersion() << std::endl;
     std::cout << "Py_GetPlatform() = " << Py_GetPlatform() << std::endl;
-    std::cout << "Py_GetProgramName() = " << W2A(Py_GetProgramName()) << std::endl;
-    std::cout << "Py_GetProgramFullPath() = " << W2A(Py_GetProgramFullPath()) << std::endl << std::endl;
+    std::cout << "Py_GetProgramName() = " << _U2A(Py_GetProgramName()) << std::endl;
+    std::cout << "Py_GetProgramFullPath() = " << _U2A(Py_GetProgramFullPath()) << std::endl << std::endl;
+
 }
 
 int main(int argc, char* argv[])
 {
+    // 로케일 설정
+    setlocale(LC_ALL, "");
+
     std::string exeDir;
     std::string scriptsDir;
     std::string resultDir;
