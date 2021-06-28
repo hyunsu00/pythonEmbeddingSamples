@@ -23,20 +23,20 @@
 #	include <libgen.h>	// dirname
 #endif
 
+auto _U2A = [](const std::wstring& wstr) -> std::string {
+    std::vector<char> strVector(wstr.length() + 1, 0);
+    wcstombs(&strVector[0], wstr.c_str(), strVector.size());
+    return &strVector[0];
+};
+
+auto _A2U = [](const std::string& str) -> std::wstring {
+    std::vector<wchar_t> wstrVector(str.length() + 1, 0);
+    mbstowcs(&wstrVector[0], str.c_str(), wstrVector.size());
+    return &wstrVector[0];
+};
+
 void _PrintPyInfo()
 {
-    auto _U2A = [](const std::wstring& wstr) -> std::string {
-        std::vector<char> strVector(wstr.length() + 1, 0);
-        wcstombs(&strVector[0], wstr.c_str(), strVector.size());
-        return &strVector[0];
-    };
-
-    auto _A2U = [](const std::string& str) -> std::wstring {
-        std::vector<wchar_t> wstrVector(str.length() + 1, 0);
-        mbstowcs(&wstrVector[0], str.c_str(), wstrVector.size());
-        return &wstrVector[0];
-    };
-
     std::cout << "Py_GetPath() = " << _U2A(Py_GetPath()) << std::endl << std::endl;
     // std::cout << "Py_GetPythonHome() = " << W2A(Py_GetPythonHome()) << std::endl;
     std::cout << "Py_GetVersion() = " << Py_GetVersion() << std::endl;
@@ -78,6 +78,7 @@ int main(int argc, char* argv[])
 
     std::cout << "Py_InitializeEx(0) = 시작" << std::endl;
     Py_SetProgramName(L"pythonEmbeddingSample02");
+    // Py_Initialize(); // == Py_InitializeEx(1)
     Py_InitializeEx(0);
     if (!Py_IsInitialized()) {
         std::cerr << "Py_InitializeEx is Failed" << std::endl;
@@ -138,4 +139,7 @@ int main(int argc, char* argv[])
     }
 
     Py_Finalize();
+    std::cout << "Py_Finalize() = 종료" << std::endl;
+
+    return 0;
 }

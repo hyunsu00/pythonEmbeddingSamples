@@ -1,44 +1,62 @@
 ﻿// pythonEmbeddingSample03.cpp
 //
 #include <iostream>
+#include <string> // std::string
 #include <vector> // std::vector
+#include <stdlib.h> // wcstombs, mbstowcs
 
+// Python
 #ifdef _DEBUG
 #   undef _DEBUG
-#   include <python.h>
+#   include <Python.h>
 #   define _DEBUG
 #else
-#   include <python.h>
+#   include <Python.h>
 #endif
 
 #ifdef _WIN32
-#   include <atlconv.h>
+#	include <crtdbg.h> // _ASSERTE
 #else
+#	include <assert.h> // assert
+#	define _ASSERTE assert
 #	include <string.h>	// strdup
 #	include <libgen.h>	// dirname
 #endif
 
+auto _U2A = [](const std::wstring& wstr) -> std::string {
+    std::vector<char> strVector(wstr.length() + 1, 0);
+    wcstombs(&strVector[0], wstr.c_str(), strVector.size());
+    return &strVector[0];
+};
+
+auto _A2U = [](const std::string& str) -> std::wstring {
+    std::vector<wchar_t> wstrVector(str.length() + 1, 0);
+    mbstowcs(&wstrVector[0], str.c_str(), wstrVector.size());
+    return &wstrVector[0];
+};
+
 void _PrintPyInfo()
 {
-    USES_CONVERSION;
-
-    std::cout << "Py_GetPath() = " << W2A(Py_GetPath()) << std::endl << std::endl;
+    std::cout << "Py_GetPath() = " << _U2A(Py_GetPath()) << std::endl << std::endl;
     std::cout << "Py_GETENV(\"PATH\") = " << getenv("PATH") << std::endl << std::endl;
     // std::cout << "Py_GETENV(\"PYTHONPATH\") = " << getenv("PYTHONPATH") << std::endl << std::endl;
     // std::cout << "Py_GetPythonHome() = " << W2A(Py_GetPythonHome()) << std::endl;
     std::cout << "Py_GetVersion() = " << Py_GetVersion() << std::endl;
     std::cout << "Py_GetPlatform() = " << Py_GetPlatform() << std::endl;
-    std::cout << "Py_GetProgramName() = " << W2A(Py_GetProgramName()) << std::endl;
-    std::cout << "Py_GetProgramFullPath() = " << W2A(Py_GetProgramFullPath()) << std::endl << std::endl;
+    std::cout << "Py_GetProgramName() = " << _U2A(Py_GetProgramName()) << std::endl;
+    std::cout << "Py_GetProgramFullPath() = " << _U2A(Py_GetProgramFullPath()) << std::endl << std::endl;
 }
 
 int main(int argc, char* argv[])
 {
+    // 로케일 설정
+    setlocale(LC_ALL, "");
+
     std::string exeDir;
-    std::string playwrightDir;
     std::string scriptsDir;
     std::string resultDir;
-#ifdef _WIN32	
+#ifdef _WIN32
+    std::string playwrightDir;
     {
         char drive[_MAX_DRIVE] = { 0, }; // 드라이브 명
         char dir[_MAX_DIR] = { 0, }; // 디렉토리 경로
@@ -50,18 +68,15 @@ int main(int argc, char* argv[])
     }
     // 환경변수 설정
     {
-
-        USES_CONVERSION;
-
         size_t requiredSize;
         _wgetenv_s(&requiredSize, nullptr, 0, L"PATH");
         std::vector<wchar_t> envPath(requiredSize, 0);
         _wgetenv_s(&requiredSize, &envPath[0], requiredSize, L"PATH");
 
-        std::wstring addEnvPath = std::wstring(A2W(playwrightDir.c_str())) + L";";
+        std::wstring addEnvPath = std::wstring(_A2U(playwrightDir.c_str())) + L";";
         _wputenv_s(L"PATH", addEnvPath.c_str());
 
-        //_wputenv_s(L"PYTHONPATH", A2W(pythonDir.c_str()));
+        //_wputenv_s(L"PYTHONPATH", _A2U(pythonDir.c_str()));
     }
 #else
     {
@@ -69,7 +84,6 @@ int main(int argc, char* argv[])
         exeDir = dirname(exePath);
         free(exePath);
         exeDir += "/";
-        pythonDir = exeDir + "python-3.7.8/";
         scriptsDir = exeDir + "scripts/";
         resultDir = exeDir + "result/";
     }
@@ -77,18 +91,9 @@ int main(int argc, char* argv[])
 
     _PrintPyInfo();
 
-#ifdef _WIN64
-    #ifdef _DEBUG
-    #else
-    #endif
-#else
-    #ifdef _DEBUG
-    #else
-    #endif
-#endif
-
+    std::cout << "Py_InitializeEx(0) = 시작" << std::endl;
     Py_SetProgramName(L"pythonEmbeddingSample03");
-    //Py_Initialize(); // == Py_InitializeEx(1)
+    // Py_Initialize(); // == Py_InitializeEx(1)
     Py_InitializeEx(0);
     if (!Py_IsInitialized()) {
         std::cerr << "Py_InitializeEx is Failed" << std::endl;
@@ -148,4 +153,7 @@ int main(int argc, char* argv[])
     }
 
     Py_Finalize();
+    std::cout << "Py_Finalize() = 종료" << std::endl;
+
+    return 0;
 }
