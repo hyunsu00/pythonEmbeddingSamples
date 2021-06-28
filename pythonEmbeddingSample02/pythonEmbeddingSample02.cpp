@@ -38,12 +38,17 @@ auto _A2U = [](const std::string& str) -> std::wstring {
 void _PrintPyInfo()
 {
     std::cout << "Py_GetPath() = " << _U2A(Py_GetPath()) << std::endl << std::endl;
-    // std::cout << "Py_GetPythonHome() = " << W2A(Py_GetPythonHome()) << std::endl;
+    std::cout << "Py_GETENV(\"PATH\") = " << getenv("PATH") << std::endl << std::endl;
+    if (getenv("PYTHONPATH")) {
+        std::cout << "Py_GETENV(\"PYTHONPATH\") = " << getenv("PYTHONPATH") << std::endl << std::endl;
+    }
+    if (Py_GetPythonHome()) {
+        std::cout << "Py_GetPythonHome() = " << _U2A(Py_GetPythonHome()) << std::endl;
+    }
     std::cout << "Py_GetVersion() = " << Py_GetVersion() << std::endl;
     std::cout << "Py_GetPlatform() = " << Py_GetPlatform() << std::endl;
     std::cout << "Py_GetProgramName() = " << _U2A(Py_GetProgramName()) << std::endl;
     std::cout << "Py_GetProgramFullPath() = " << _U2A(Py_GetProgramFullPath()) << std::endl << std::endl;
-
 }
 
 int main(int argc, char* argv[])
