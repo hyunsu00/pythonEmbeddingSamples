@@ -9,10 +9,17 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pythonEmbeddingSample02", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pythonEmbeddingSample03", "pythonEmbeddingSample03\pythonEmbeddingSample03.vcxproj", "{9B10C235-2C7D-4D30-8C36-50DFB50AFB15}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{59E8D76E-D4DB-46B4-A3C9-6D0D35786EF3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "readme", "readme", "{59E8D76E-D4DB-46B4-A3C9-6D0D35786EF3}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{62BB4D28-0B41-4385-9C90-61251AFF9FAC}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\__init__.py = scripts\__init__.py
+		scripts\ConvertHtmlModule.py = scripts\ConvertHtmlModule.py
+		scripts\test_def.py = scripts\test_def.py
 	EndProjectSection
 EndProject
 Global

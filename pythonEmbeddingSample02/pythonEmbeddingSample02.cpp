@@ -1,8 +1,9 @@
 ﻿// pythonEmbeddingSample02.cpp
 //
 #include <iostream>
-#include <string>
-#include <vector>
+#include <string> // std::string
+#include <vector> // std::vector
+#include <stdlib.h> // wcstombs, mbstowcs
 
 // Python
 #ifdef _DEBUG

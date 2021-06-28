@@ -109,7 +109,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>$(ProjectDir)../Extern/7-zip/7z x "$(ProjectDir)../Extern/python/python-3.7.8-embed/python-3.7.8-embed-win32_playwright.7z.001" -o"$(OutDir)playwright/" -y
+      <Command>IF NOT EXIST $(OutDir)playwright. ($(ProjectDir)../Extern/7-zip/7z x "$(ProjectDir)../Extern/python/python-3.7.8-embed/python-3.7.8-embed-win32_playwright_chromium.7z" -o"$(OutDir)playwright/" -y)
 xcopy "$(ProjectDir)../scripts/*.*" "$(OutDir)scripts/" /e /d /h /y /f
 IF NOT EXIST $(OutDir)result. (mkdir $(OutDir)result)</Command>
     </PostBuildEvent>
@@ -137,7 +137,7 @@ IF NOT EXIST $(OutDir)result. (mkdir $(OutDir)result)</Command>
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>$(ProjectDir)../Extern/7-zip/7z x "$(ProjectDir)../Extern/python/python-3.7.8-embed/python-3.7.8-embed-win32_playwright.7z.001" -o"$(OutDir)playwright/" -y
+      <Command>IF NOT EXIST $(OutDir)playwright. ($(ProjectDir)../Extern/7-zip/7z x "$(ProjectDir)../Extern/python/python-3.7.8-embed/python-3.7.8-embed-win32_playwright_chromium.7z" -o"$(OutDir)playwright/" -y)
 xcopy "$(ProjectDir)../scripts/*.*" "$(OutDir)scripts/" /e /d /h /y /f
 IF NOT EXIST $(OutDir)result. (mkdir $(OutDir)result)</Command>
     </PostBuildEvent>
@@ -161,7 +161,7 @@ IF NOT EXIST $(OutDir)result. (mkdir $(OutDir)result)</Command>
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>$(ProjectDir)../Extern/7-zip/7z x "$(ProjectDir)../Extern/python/python-3.7.8-embed/python-3.7.8-embed-amd64_playwright.7z.001" -o"$(OutDir)playwright/" -y
+      <Command>IF NOT EXIST $(OutDir)playwright. ($(ProjectDir)../Extern/7-zip/7z x "$(ProjectDir)../Extern/python/python-3.7.8-embed/python-3.7.8-embed-amd64_playwright_chromium.7z" -o"$(OutDir)playwright/" -y)
 xcopy "$(ProjectDir)../scripts/*.*" "$(OutDir)scripts/" /e /d /h /y /f
 IF NOT EXIST $(OutDir)result. (mkdir $(OutDir)result)
 </Command>
@@ -190,7 +190,7 @@ IF NOT EXIST $(OutDir)result. (mkdir $(OutDir)result)
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>$(ProjectDir)../Extern/7-zip/7z x "$(ProjectDir)../Extern/python/python-3.7.8-embed/python-3.7.8-embed-amd64_playwright.7z.001" -o"$(OutDir)playwright/" -y
+      <Command>IF NOT EXIST $(OutDir)playwright. ($(ProjectDir)../Extern/7-zip/7z x "$(ProjectDir)../Extern/python/python-3.7.8-embed/python-3.7.8-embed-amd64_playwright_chromium.7z" -o"$(OutDir)playwright/" -y)
 xcopy "$(ProjectDir)../scripts/*.*" "$(OutDir)scripts/" /e /d /h /y /f
 IF NOT EXIST $(OutDir)result. (mkdir $(OutDir)result)
 </Command>
