@@ -18,26 +18,52 @@ python -m install playwright
 ### 우분투 18.04 빌드
 
 ```bash
-# wget, zlib1g-dev이 설치 되어 있지 않다면 설치
+# wget 설치 되어 있지 않다면 설치
 apt install wget -y
-apt install zlib1g-dev -y
+
+# python-3.7.0 빌드시 필요한 패키지 설치
+apt update
+apt upgrade
+apt dist-upgrade
+apt -y install build-essential python-dev python-setuptools python-pip python-smbus
+apt -y install libncursesw5-dev libgdbm-dev libc6-dev
+apt -y install zlib1g-dev libsqlite3-dev tk-dev
+apt -y install libssl-dev openssl
+# libffi-dev : python 디버깅시 ctype에러 수정
+apt -y install libffi-dev
+apt -y install zlib1g-dev6
+
+#확인
+python -V
+which python
+ls -al /usr/bin/python
+ls /usr/bin | grep python
 
 # python-3.7.10 설치
 cd /tmp
-wget --no-check-certificate https://www.python.org/ftp/python/3.7.10/Python-3.7.10.tgz
+# openssl 설치해서 --no-check-certificate 불필요
+# wget --no-check-certificate https://www.python.org/ftp/python/3.7.10/Python-3.7.10.tgz
+wget https://www.python.org/ftp/python/3.7.10/Python-3.7.10.tgz
 tar xzf Python-3.7.10.tgz
 cd Python-3.7.10
-./configure
-make install
+# ./configure
+# make install
+./configure --enable-optimizations
+make altinstall
 
 #확인
-python3 -V
-which python3
 which python3.7
+ls -al /usr/local/bin/python3.7
+ls /usr/local/bin | grep python
 
 # playwright 설치
-pip3.7 install playwright -i http://mirror.kakao.com/pypi/simple --trusted-host mirror.kakao.com
-python3.7 -m playwright install
+# openssl 설치해서 -i(index-url), --trusted-host 불필요
+# pip3.7 install playwright -i http://mirror.kakao.com/pypi/simple --trusted-host mirror.kakao.com
+pip3.7 install playwright
+# 브라우저 모두 설치
+# python3.7 -m playwright install
+# 브라우저 chromium만 설치
+python3.7 -m playwright install chromium
 
 # playwright 실행시 필요한 패키지 설치
 apt install -y libnss3 \
@@ -58,46 +84,41 @@ libcairo2 \
 libasound2 \
 libatspi2.0-0
 
-apt install libxshmfence-dev -y
+apt -y install libxshmfence-dev
 ```
 
+## 참고 (여러버전 파이선 설정)
+
+```bash
+# python 확인
+python -V
+which python
+ls -al /usr/bin/python
+ls /usr/bin | grep python
+which python3.7
+ls -al /usr/local/bin/python3.7
+ls /usr/local/bin | grep python
+
+# 설정
+update-alternatives --config python
+update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
+update-alternatives --install /usr/bin/python python /usr/local/bin/python3.7 2
+update-alternatives --config python
+```
+
+### centos 7 빌드
+
+```bash
+
+```
+
+```bash
+#
 index-url=http://mirror.kakao.com/pypi/simple
 trusted-host=mirror.kakao.com
 
-./configure --enable-optimizations
-sudo make altinstall
-
-# 추가
-
-which python3.6
-
-sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
-sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.7 2
-
-sudo update-alternatives --config python3
-
-sudo pip3.7 install playwright
-
-```
-
-ls -al /usr/bin/python
-ls /usr/bin | grep python
-
-sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
-sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.6 2
-sudo update-alternatives --install /usr/bin/python python /usr/local/bin/python3.7 3
-sudo update-alternatives --config python
-
-
-pip3.7 install playwright
-
-python3.7 -m playwright install
-
-#
 PLAYWRIGHT_BROWSERS_PATH=0 python3.7 -m playwright install
-
 # 위에거 안되면
 python3.7 -m playwright install
-
 sudo apt-get install libgbm1
 ```
