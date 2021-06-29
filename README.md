@@ -242,3 +242,18 @@ $env:PLAYWRIGHT_BROWSERS_PATH=0
 pip install playwright
 playwright install
 ```
+
+#### 참고 (chromium, firefox cli)
+
+```powershell
+#크롬
+# 화면캡쳐 - 전체화면 캡쳐는 확인 요망
+chrome --headless --disable-gpu --hide-scrollbars --screenshot=naver.png https://www.naver.com
+# PDF 저장
+chrome --headless --disable-gpu --print-to-pdf=naver.pdf https://www.naver.com
+
+[파이어폭스]
+# 화면캡쳐 - 전체 화면
+firefox --screenshot=naver.png https://www.naver.com
+# PDF 저장 지원안함
+```
