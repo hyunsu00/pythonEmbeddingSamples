@@ -30,6 +30,8 @@ class LogRecordStreamHandler(socketserver.StreamRequestHandler):
             print('Error: Creating directory. ' + directory)
         cnt = 0
 
+        # pickle 처리
+        # '''
         while True:
             chunk = self.connection.recv(4)
             if len(chunk) < 4:
@@ -45,6 +47,32 @@ class LogRecordStreamHandler(socketserver.StreamRequestHandler):
             self.writeChunk(directory + '/chunk{0}.pkl'.format(cnt), chunk)
             self.writeRecord(directory + '/record{0}.pkl'.format(cnt), record)
             cnt += 1
+        # '''
+
+        # msgpack 처리
+        '''
+        import msgpack
+        unpacker = msgpack.Unpacker(use_list=False, raw=False)
+        while True:
+            data = self.connection.recv(1024)
+            if not data:
+                break
+            unpacker.feed(data)
+            for unpacked in unpacker:
+                # LogRecord 수정 요망
+                record = logging.LogRecord(
+                    unpacked['name'],
+                    unpacked['levelno'],
+                    unpacked['pathname'],
+                    unpacked['lineno'],
+                    unpacked['msg'],
+                    unpacked['args'],
+                    unpacked['exc_info'],
+                    unpacked['funcName'],
+                    unpacked['stack_info']
+                )
+                self.handleLogRecord(record)
+        '''
 
     def unPickle(self, data):
         return pickle.loads(data)
