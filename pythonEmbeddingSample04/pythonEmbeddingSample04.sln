@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C8E6A997-C4AE-4185-B6BC-0D495115591C}") = "pythonEmbeddingSample04", "pythonEmbeddingSample04.vcxproj", "{1C344805-F189-4043-87B3-0BA382023782}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C344805-F189-4043-87B3-0BA382023782}.Debug|x64.ActiveCfg = Debug|x64
+		{1C344805-F189-4043-87B3-0BA382023782}.Debug|x64.Build.0 = Debug|x64
+		{1C344805-F189-4043-87B3-0BA382023782}.Debug|x86.ActiveCfg = Debug|Win32
+		{1C344805-F189-4043-87B3-0BA382023782}.Debug|x86.Build.0 = Debug|Win32
+		{1C344805-F189-4043-87B3-0BA382023782}.Release|x64.ActiveCfg = Release|x64
+		{1C344805-F189-4043-87B3-0BA382023782}.Release|x64.Build.0 = Release|x64
+		{1C344805-F189-4043-87B3-0BA382023782}.Release|x86.ActiveCfg = Release|Win32
+		{1C344805-F189-4043-87B3-0BA382023782}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD5BD573-0801-437C-B00C-644DD9078904}
+	EndGlobalSection
+EndGlobal
