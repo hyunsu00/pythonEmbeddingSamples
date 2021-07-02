@@ -32,7 +32,7 @@ class LogRecordStreamHandler(socketserver.StreamRequestHandler):
         cnt = 0
 
         # pickle 처리
-        # '''
+        '''
         while True:
             chunk = self.connection.recv(4)
             if len(chunk) < 4:
@@ -48,10 +48,10 @@ class LogRecordStreamHandler(socketserver.StreamRequestHandler):
             self.writeChunk(directory + '/chunk{0}.pkl'.format(cnt), chunk)
             self.writeRecord(directory + '/record{0}.pkl'.format(cnt), record)
             cnt += 1
-        # '''
+        '''
 
         # msgpack 처리
-        '''
+        # '''
         import msgpack
         unpacker = msgpack.Unpacker(use_list=False, raw=False)
         while True:
@@ -62,7 +62,7 @@ class LogRecordStreamHandler(socketserver.StreamRequestHandler):
             for unpacked in unpacker:
                 record = msgpackLogRecord.createLogRecord(unpacked)
                 self.handleLogRecord(record)
-        '''
+        # '''
 
     def unPickle(self, data):
         return pickle.loads(data)

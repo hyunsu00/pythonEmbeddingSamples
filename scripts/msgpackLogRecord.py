@@ -1,6 +1,5 @@
-# magpackLogRecord.py
+# msgpackLogRecord.py
 import logging
-import msgpack
 
 
 class magpackLogRecord(logging.LogRecord):

@@ -28,7 +28,13 @@ class msgpackSocketHandler(logging.handlers.SocketHandler):
 
     # msgpack 바이트 전송
     def makePickle(self, record) -> bytes:
-        return msgpack.packb(record.__dict__)
+        data = msgpack.packb(record.__dict__)
+        return data
+
+    def debugWrite(self, fileName, data):
+        f = open(fileName, 'wb')
+        f.write(data)
+        f.close()
 
 
 def main():
@@ -36,12 +42,12 @@ def main():
     rootLogger.setLevel(logging.DEBUG)
 
     # 기본 소켓 핸들러
-    # """
+    """
     socketHandler = logging.handlers.SocketHandler(
         'localhost',
         logging.handlers.DEFAULT_TCP_LOGGING_PORT
     )
-    # """
+    """
 
     # json 소켓 핸들러
     """
@@ -51,11 +57,11 @@ def main():
     """
 
     # msgpack 소켓 핸들러
-    """
+    # """
     socketHandler = msgpackSocketHandler(
         'localhost', logging.handlers.DEFAULT_TCP_LOGGING_PORT
     )
-    """
+    # """
 
     # don't bother with a formatter, since a socket handler sends the event as
     # an unformatted pickle
