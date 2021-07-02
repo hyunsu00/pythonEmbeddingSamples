@@ -5,6 +5,7 @@ import logging.handlers
 import socketserver
 import struct
 import os
+import msgpackLogRecord
 
 
 class LogRecordStreamHandler(socketserver.StreamRequestHandler):
@@ -59,18 +60,7 @@ class LogRecordStreamHandler(socketserver.StreamRequestHandler):
                 break
             unpacker.feed(data)
             for unpacked in unpacker:
-                # LogRecord 수정 요망
-                record = logging.LogRecord(
-                    unpacked['name'],
-                    unpacked['levelno'],
-                    unpacked['pathname'],
-                    unpacked['lineno'],
-                    unpacked['msg'],
-                    unpacked['args'],
-                    unpacked['exc_info'],
-                    unpacked['funcName'],
-                    unpacked['stack_info']
-                )
+                record = msgpackLogRecord.createLogRecord(unpacked)
                 self.handleLogRecord(record)
         '''
 
